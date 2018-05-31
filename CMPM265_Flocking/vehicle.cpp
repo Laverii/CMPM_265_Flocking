@@ -17,8 +17,8 @@ vehicle::vehicle(float posX, float posY, float velX, float velY)
 	//sets up the shape of vehicle
 	vehicleShape.setPointCount(3);
 	vehicleShape.setPoint(0, sf::Vector2f(pos.x,pos.y));
-	vehicleShape.setPoint(1, sf::Vector2f(pos.x + 10, pos.y + 15));
-	vehicleShape.setPoint(1, sf::Vector2f(pos.x - 10, pos.y - 15));
+	vehicleShape.setPoint(1, sf::Vector2f(pos.x - 10, pos.y + 20));
+	vehicleShape.setPoint(2, sf::Vector2f(pos.x - 10, pos.y - 20));
 	vehicleShape.setFillColor(sf::Color::White);
 	//Set the x position
 	pos.x = posX;

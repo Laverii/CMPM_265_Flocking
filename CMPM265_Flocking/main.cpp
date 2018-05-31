@@ -15,29 +15,9 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 	Clock clock;
-	/*
-	//for testing purposes
-	float testForce = 10;
-	float posX = 100;
-	float posY = 100;
-	float velX = 4;
-	float velY = 4;
-	float accelX = 5;
-	float accelY = 5;
-	
 
-	CircleShape shape(10, 3);
-	shape.setFillColor(sf::Color::White);
-	
-
-	vehicle testVehicle(shape, posX, posY, velX, velY, &window);
-	//end of testing stuff
-	*/
-
-	//test two
+	//Make a vehicle system
 	vehicleSystem testSys(&window);
-
-	sf::CircleShape shape(100.0f);
 
 	while (window.isOpen())
 	{
@@ -53,11 +33,14 @@ int main()
 		}
 
 
-		//test update
-		//window.draw(*testVehicle.updateVehicle(dt));
+		//Make the vehicle system update
+		testSys.updateVehicleSystem(dt);
+		
+		//draw each vehicle in the vehicle system
+		for (int i = 0; i < testSys.vSystem.size(); i++) {
 
-		//doesn't wor here
-		//window.draw(testSys.updateVehicleSystem(dt));
+			window.draw(testSys.vSystem[i].vehicleShape);
+		}
 
 		//Debug Center
 		//sf::CircleShape centerCircle(5, 50);

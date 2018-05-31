@@ -14,9 +14,6 @@ vehicleSystem::vehicleSystem(RenderWindow *window)
 	velocityX = 4;
 	velocityY = 4;
 
-	//Set the shape of the vehicles
-	//*vehicleShape(10, 3);
-
 	//set the window
 	theWindow = window;
 }
@@ -27,26 +24,26 @@ void vehicleSystem::updateVehicleSystem(float dt) {
 	//get the mouse position
 	Vector2f targetPos = Vector2f(Mouse::getPosition(*theWindow));
 
+	//if the button has been pressed
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		//create a new vehicle
+		vehicle newVehicle(targetPos.x, targetPos.y, velocityX, velocityY);
+		//push it bac into the vector
+		vSystem.push_back(newVehicle);
+	}
+
+	//removes the vehicle
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && vSystem.size() > 0) {
+		//erase the vehicle
+		vSystem.erase(vSystem.begin());
+	}
+
 	//draw the vehicles
 	for(int i = 0; i < vSystem.size(); i++) {
 
-		//if the button has been pressed
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			//create a new vehicle
-			vehicle newVehicle(targetPos.x, targetPos.y, velocityX, velocityY);
-			//push it bac into the vector
-			vSystem.push_back(newVehicle);
-		}
-
-		//removes the vehicle
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-			//erase the vehicle
-			vSystem.erase(vSystem.begin() + 1);
-		}
-
+		//update vehicle position
 		vSystem[i].updateVehicle(dt, targetPos);
 	}
-
 
 }
 
