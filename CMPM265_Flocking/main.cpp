@@ -37,6 +37,8 @@ int main()
 	//test two
 	vehicleSystem testSys(&window);
 
+	sf::CircleShape shape(100.0f);
+
 	while (window.isOpen())
 	{
 		sf::Event event;
