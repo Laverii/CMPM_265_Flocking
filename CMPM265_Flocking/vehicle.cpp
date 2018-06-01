@@ -7,6 +7,8 @@
 #include <SFML/OpenGL.hpp>
 #include <SFML/Main.hpp>
 #include "vectorMath.h"
+#include <vector> 
+#include <cmath>
 
 using namespace std;
 using namespace sf;
@@ -14,11 +16,13 @@ using namespace sf;
 //sets up the parameter for the vehicle class
 vehicle::vehicle(float posX, float posY, float velX, float velY)
 {
+	//radius
+	radius = 5;
 	//sets up the shape of vehicle
 	vehicleShape.setPointCount(3);
 	vehicleShape.setPoint(0, sf::Vector2f(pos.x,pos.y));
-	vehicleShape.setPoint(1, sf::Vector2f(pos.x - 5, pos.y + 10));
-	vehicleShape.setPoint(2, sf::Vector2f(pos.x - 5, pos.y - 10));
+	vehicleShape.setPoint(1, sf::Vector2f(pos.x - radius, pos.y + radius*2));
+	vehicleShape.setPoint(2, sf::Vector2f(pos.x - radius, pos.y - radius*2));
 	vehicleShape.setFillColor(sf::Color::White);
 	//Set the x position
 	pos.x = posX;
@@ -34,7 +38,6 @@ vehicle::vehicle(float posX, float posY, float velX, float velY)
 	maxSpeed = 200;
 	//Set the center
 	vehicleShape.setOrigin(vehicleShape.getLocalBounds().width / 2, vehicleShape.getLocalBounds().height / 2);
-	//theWindow = window;
 	//set the initial acceleration
 	accel.x = 100;
 	accel.y = 100;
@@ -109,6 +112,145 @@ ConvexShape *vehicle::updateVehicle(float dt, Vector2f targetPos) {
 
 	//return the vehicle shape
 	return &vehicleShape;
+}
+
+//Seperation behavior between the vehicles
+void vehicle::seperation(vector<vehicle> vehicleVector) {
+	//Find how far I want each vehicle to be
+	float desiredSep = radius * 2;
+	//Get the sum
+	Vector2f sum;
+	//count the amnt of cars within the vicnity
+	float cnt = 0.0f;
+
+	//loop through all the vehicles in the vector
+	for (int i = 0; i < vehicleVector.size(); i++) {
+		//find the distance between sqrt((x2 - x1) - (y2- y1))
+		float distance = sqrt((pos.x - vehicleVector[i].pos.x) - (pos.y - vehicleVector[i].pos.y));
+
+		//if the distance is more than 0 but less than the desired seperation (nearby the cars)
+		if((distance > 0) && (distance < desiredSep)){
+
+			//FInd the difference between the two positions
+			Vector2f difference = pos - vehicleVector[i].pos;
+			//Normalize the vector
+			difference = vectorMath::normalize(difference);
+			//divide the difference by the distance
+			difference = difference / distance;
+			//add the difference to the sum
+			sum = sum + difference;
+			//increase the count
+			cnt++;
+		}
+	}//end for loop
+
+	//if there are several cars within the vincity
+	if (cnt > 0) {
+		//divide the sum by the count
+		sum = sum / cnt;
+		//normalize the sum
+		sum = vectorMath::normalize(sum);
+		//Multiply the sum by the maxspeed
+		sum = sum * maxSpeed;
+		//get the steer
+		Vector2f steer = sum - vel;
+		//limit the steering
+		steer = vectorMath::limit(steer, maxForce);
+		//add the acceleration in
+		acceleration(steer);
+
+	}
+}
+
+//Provides alignment behavior to the vehicles
+Vector2f vehicle::alignment(vector<vehicle> vehicleVector) {
+	//neighbor float
+	float neighbors = 40.0f;
+	//make a sum vector
+	Vector2f sum;
+	//create a count
+	float cnt = 0.0f;
+
+	//loop through the vehicle vector
+	for (int i = 0; i < vehicleVector.size(); i++) {
+		//find the distance between sqrt((x2 - x1) - (y2- y1))
+		float distance = sqrt((pos.x - vehicleVector[i].pos.x) - (pos.y - vehicleVector[i].pos.y));
+
+		//if the distance is greater than 0 and the distance is less than the neighbor
+		if ((distance > 0) && (distance < neighbors)){
+			//add the velocity
+			sum = sum + vehicleVector[i].vel;
+			//Increase the count
+			cnt++;
+		}
+	}//end for loop
+
+	//if there is more than one vehicle nearby
+	if (cnt > 0) {
+		//divide the sum by the count
+		sum = sum / cnt;
+		//normalize the sum
+		sum = vectorMath::normalize(sum);
+		//Multiply the sum by the maxspeed
+		sum = sum * maxSpeed;
+		//get the steer
+		Vector2f steer = sum - vel;
+		//add the acceleration in
+		acceleration(steer);
+		//return the steer
+		return steer;
+	}
+	else {
+		//returns an empty vector 2f
+		return Vector2f(0, 0);
+	}
+}
+
+Vector2f vehicle::cohesion(vector<vehicle> vehicleVector) {
+	//neighbor float
+	float neighbors = 40.0f;
+	//make a sum vector
+	Vector2f sum;
+	//create a count
+	float cnt = 0.0f;
+
+	//loop through the vehicle vector
+	for (int i = 0; i < vehicleVector.size(); i++) {
+		//find the distance between sqrt((x2 - x1) - (y2- y1))
+		float distance = sqrt((pos.x - vehicleVector[i].pos.x) - (pos.y - vehicleVector[i].pos.y));
+
+		//if the distance is greater than 0 and the distance is less than the neighbor
+		if ((distance > 0) && (distance < neighbors)) {
+			//add the velocity
+			sum = sum + vehicleVector[i].vel;
+			//Increase the count
+			cnt++;
+		}
+	}//end for loop
+
+	 //if there is more than one vehicle nearby
+	if (cnt > 0) {
+		//divide the sum by the count
+		sum = sum / cnt;
+		//search for the sum
+		search(sum);
+		//and return it
+		return sum;
+	}
+	else {
+		//returns an empty vector 2f
+		return Vector2f(0, 0);
+	}
+}
+
+//Applies the behaviors to the vehicles
+void vehicle::applyBehaviors(vector<vehicle>vehicleVector) {
+	//apply seperation
+	seperation(vehicleVector);
+	//apply alignment
+	alignment(vehicleVector);
+	//apply cohesion
+	cohesion(vehicleVector);
 }
 
 

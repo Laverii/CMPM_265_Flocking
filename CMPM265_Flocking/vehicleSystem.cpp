@@ -43,9 +43,12 @@ void vehicleSystem::updateVehicleSystem(float dt) {
 
 		//update vehicle position
 		vSystem[i].updateVehicle(dt, targetPos);
+		vSystem[i].applyBehaviors(vSystem);
 	}
 
 }
+
+
 
 vehicleSystem::~vehicleSystem()
 {

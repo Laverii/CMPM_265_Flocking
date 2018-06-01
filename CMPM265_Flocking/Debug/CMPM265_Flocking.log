@@ -1,0 +1,9 @@
+﻿  vehicle.cpp
+c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(127): warning C4018: '<': signed/unsigned mismatch
+c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(175): warning C4018: '<': signed/unsigned mismatch
+c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(218): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  vehicleSystem.cpp
+  main.cpp
+  CMPM265_Flocking.vcxproj -> C:\Users\phoen\Documents\GitHub\CMPM_265_Flocking\Debug\CMPM265_Flocking.exe

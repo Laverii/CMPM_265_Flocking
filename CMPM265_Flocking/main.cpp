@@ -16,7 +16,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 	Clock clock;
 
-	//Make a vehicle system
+	//Make a vehicle system for the simulation
 	vehicleSystem testSys(&window);
 
 	while (window.isOpen())

@@ -29,8 +29,7 @@ public:
 	vehicleSystem(RenderWindow*);
 	//updates the vehicle system
 	void vehicleSystem::updateVehicleSystem(float);
-	//Sperates the vehicles form each other.
-	void seperation(vector<vehicle>);
+	
 	~vehicleSystem();
 };
 
