@@ -17,8 +17,8 @@ vehicle::vehicle(float posX, float posY, float velX, float velY)
 	//sets up the shape of vehicle
 	vehicleShape.setPointCount(3);
 	vehicleShape.setPoint(0, sf::Vector2f(pos.x,pos.y));
-	vehicleShape.setPoint(1, sf::Vector2f(pos.x - 10, pos.y + 20));
-	vehicleShape.setPoint(2, sf::Vector2f(pos.x - 10, pos.y - 20));
+	vehicleShape.setPoint(1, sf::Vector2f(pos.x - 5, pos.y + 10));
+	vehicleShape.setPoint(2, sf::Vector2f(pos.x - 5, pos.y - 10));
 	vehicleShape.setFillColor(sf::Color::White);
 	//Set the x position
 	pos.x = posX;
@@ -35,6 +35,9 @@ vehicle::vehicle(float posX, float posY, float velX, float velY)
 	//Set the center
 	vehicleShape.setOrigin(vehicleShape.getLocalBounds().width / 2, vehicleShape.getLocalBounds().height / 2);
 	//theWindow = window;
+	//set the initial acceleration
+	accel.x = 100;
+	accel.y = 100;
 }
 
 //Add acceleration
@@ -62,10 +65,10 @@ void vehicle::search(Vector2f target) {
 	//limit steer by the maximum force
 	Vector2f limitVector = vectorMath::limit(steer, maxForce);
 
-	//then apply the force
+	//then apply the force with the acceleration
 	acceleration(limitVector);
 
-	//get the rotation
+	//get the rotation and change it
 	float radians = atan2(steer.y, steer.x);
 	vehicleShape.setRotation(radians* 52.2958f);
 
@@ -106,9 +109,7 @@ ConvexShape *vehicle::updateVehicle(float dt, Vector2f targetPos) {
 
 	//return the vehicle shape
 	return &vehicleShape;
-	
 }
-
 
 
 vehicle::~vehicle()

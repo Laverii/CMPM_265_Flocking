@@ -33,6 +33,7 @@ Vector2f vectorMath::normalize(Vector2f vector) {
 
 }
 
+//Sets the limit
 Vector2f vectorMath::limit(Vector2f vector, float length) {
 	//get magnitude
 	float magni = magnitude(vector);
@@ -45,6 +46,7 @@ Vector2f vectorMath::limit(Vector2f vector, float length) {
 	//normalized the vector
 	Vector2f normalizedVector = normalize(vector);
 	
+	//returns the limit
 	return normalizedVector * magni;
 
 }

@@ -38,7 +38,6 @@ int main()
 		
 		//draw each vehicle in the vehicle system
 		for (int i = 0; i < testSys.vSystem.size(); i++) {
-
 			window.draw(testSys.vSystem[i].vehicleShape);
 		}
 
