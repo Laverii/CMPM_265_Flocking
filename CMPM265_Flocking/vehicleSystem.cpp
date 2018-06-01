@@ -40,7 +40,6 @@ void vehicleSystem::updateVehicleSystem(float dt) {
 
 	//draw the vehicles
 	for(int i = 0; i < vSystem.size(); i++) {
-
 		//update vehicle position
 		vSystem[i].updateVehicle(dt, targetPos);
 		vSystem[i].applyBehaviors(vSystem);

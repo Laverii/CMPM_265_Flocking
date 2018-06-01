@@ -245,12 +245,22 @@ Vector2f vehicle::cohesion(vector<vehicle> vehicleVector) {
 
 //Applies the behaviors to the vehicles
 void vehicle::applyBehaviors(vector<vehicle>vehicleVector) {
-	//apply seperation
-	seperation(vehicleVector);
-	//apply alignment
-	alignment(vehicleVector);
-	//apply cohesion
-	cohesion(vehicleVector);
+
+	if (Keyboard::isKeyPressed(Keyboard::S))
+	{
+		//apply seperation
+		seperation(vehicleVector);
+	}
+	if (Keyboard::isKeyPressed(Keyboard::A))
+	{
+		//apply alignment
+		alignment(vehicleVector);
+	}
+	if (Keyboard::isKeyPressed(Keyboard::C))
+	{
+		//apply cohesion
+		cohesion(vehicleVector);
+	}
 }
 
 

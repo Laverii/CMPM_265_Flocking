@@ -41,12 +41,6 @@ int main()
 			window.draw(testSys.vSystem[i].vehicleShape);
 		}
 
-		//Debug Center
-		//sf::CircleShape centerCircle(5, 50);
-		//centerCircle.setPosition(testVehicle.pos);
-		//centerCircle.setOrigin(centerCircle.getLocalBounds().width / 2, centerCircle.getLocalBounds().height / 2);
-		//window.draw(centerCircle);
-
 		window.display();
 		window.clear();
 	}
