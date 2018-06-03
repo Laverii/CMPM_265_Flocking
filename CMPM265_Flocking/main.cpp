@@ -38,6 +38,32 @@ int main()
 		
 		//draw each vehicle in the vehicle system
 		for (int i = 0; i < testSys.vSystem.size(); i++) {
+			//turns on seperation
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				testSys.vSystem[i].sepOn = true;
+			}
+			//turns off seperation
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
+				testSys.vSystem[i].sepOn = false;
+			}
+			//turns on alignment
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				testSys.vSystem[i].alignOn = true;
+			}
+			//turns off alignment
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+				testSys.vSystem[i].alignOn = false;
+			}
+			//turns on cohesion
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+				testSys.vSystem[i].cohOn = true;
+			}
+			//turns off alignment
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::V)) {
+				testSys.vSystem[i].cohOn = false;
+			}
+
+			//Draw the vehicles 
 			window.draw(testSys.vSystem[i].vehicleShape);
 		}
 

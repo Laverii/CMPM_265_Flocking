@@ -1,10 +1,9 @@
-﻿  vehicleSystem.cpp
-c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\vehiclesystem.cpp(42): warning C4018: '<': signed/unsigned mismatch
-  vehicle.cpp
-c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(127): warning C4018: '<': signed/unsigned mismatch
-c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(175): warning C4018: '<': signed/unsigned mismatch
-c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(218): warning C4018: '<': signed/unsigned mismatch
+﻿  vehicle.cpp
+c:\users\phoen\documents\ucsc\cmpm-265\cmpm_265_flocking\cmpm265_flocking\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(132): warning C4018: '<': signed/unsigned mismatch
+c:\users\phoen\documents\ucsc\cmpm-265\cmpm_265_flocking\cmpm265_flocking\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(183): warning C4018: '<': signed/unsigned mismatch
+c:\users\phoen\documents\ucsc\cmpm-265\cmpm_265_flocking\cmpm265_flocking\cmpm_265_flocking\cmpm265_flocking\vehicle.cpp(226): warning C4018: '<': signed/unsigned mismatch
   main.cpp
-c:\users\phoen\documents\github\cmpm_265_flocking\cmpm265_flocking\main.cpp(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\phoen\documents\ucsc\cmpm-265\cmpm_265_flocking\cmpm265_flocking\cmpm_265_flocking\cmpm265_flocking\main.cpp(40): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
-  CMPM265_Flocking.vcxproj -> C:\Users\phoen\Documents\GitHub\CMPM_265_Flocking\Debug\CMPM265_Flocking.exe
+  CMPM265_Flocking.vcxproj -> C:\Users\phoen\Documents\UCSC\CMPM-265\CMPM_265_Flocking\CMPM265_Flocking\CMPM_265_Flocking\Debug\CMPM265_Flocking.exe
+  CMPM265_Flocking.vcxproj -> C:\Users\phoen\Documents\UCSC\CMPM-265\CMPM_265_Flocking\CMPM265_Flocking\CMPM_265_Flocking\Debug\CMPM265_Flocking.pdb (Partial PDB)

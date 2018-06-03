@@ -25,6 +25,9 @@ public:
 	float maxForce;
 	float maxSpeed;
 	float radius;
+	bool sepOn;
+	bool cohOn;
+	bool alignOn;
 
 	vehicle();
 	//vehicle(CircleShape, float, float, float, float, RenderWindow*);
@@ -37,7 +40,7 @@ public:
 	//Applies acceleration
 	void vehicle::acceleration(Vector2f);
 	//Applies seperation behavior
-	void vehicle::seperation(vector<vehicle>);
+	Vector2f vehicle::seperation(vector<vehicle>);
 	//Applies the alignment behavior
 	Vector2f vehicle::alignment(vector<vehicle>);
 	//Applies the cohesion behavior

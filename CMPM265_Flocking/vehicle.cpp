@@ -41,6 +41,10 @@ vehicle::vehicle(float posX, float posY, float velX, float velY)
 	//set the initial acceleration
 	accel.x = 100;
 	accel.y = 100;
+	//booleans for applying forces
+	sepOn = false;
+	alignOn = false;
+	cohOn = false;
 }
 
 //Add acceleration
@@ -115,7 +119,8 @@ ConvexShape *vehicle::updateVehicle(float dt, Vector2f targetPos) {
 }
 
 //Seperation behavior between the vehicles
-void vehicle::seperation(vector<vehicle> vehicleVector) {
+Vector2f vehicle::seperation(vector<vehicle> vehicleVector) {
+	
 	//Find how far I want each vehicle to be
 	float desiredSep = radius * 2;
 	//Get the sum
@@ -123,28 +128,28 @@ void vehicle::seperation(vector<vehicle> vehicleVector) {
 	//count the amnt of cars within the vicnity
 	float cnt = 0.0f;
 
-	//loop through all the vehicles in the vector
-	for (int i = 0; i < vehicleVector.size(); i++) {
-		//find the distance between sqrt((x2 - x1) - (y2- y1))
-		float distance = sqrt((pos.x - vehicleVector[i].pos.x) - (pos.y - vehicleVector[i].pos.y));
+		//loop through all the vehicles in the vector
+		for (int i = 0; i < vehicleVector.size(); i++) {
+			//find the distance between sqrt((x2 - x1) - (y2- y1))
+			float distance = sqrt((pos.x - vehicleVector[i].pos.x) - (pos.y - vehicleVector[i].pos.y));
 
-		//if the distance is more than 0 but less than the desired seperation (nearby the cars)
-		if((distance > 0) && (distance < desiredSep)){
+			//if the distance is more than 0 but less than the desired seperation (nearby the cars)
+			if ((distance > 0) && (distance < desiredSep)) {
 
-			//FInd the difference between the two positions
-			Vector2f difference = pos - vehicleVector[i].pos;
-			//Normalize the vector
-			difference = vectorMath::normalize(difference);
-			//divide the difference by the distance
-			difference = difference / distance;
-			//add the difference to the sum
-			sum = sum + difference;
-			//increase the count
-			cnt++;
-		}
-	}//end for loop
+				//FInd the difference between the two positions
+				Vector2f difference = pos - vehicleVector[i].pos;
+				//Normalize the vector
+				difference = vectorMath::normalize(difference);
+				//divide the difference by the distance
+				difference = difference / distance;
+				//add the difference to the sum
+				sum = sum + difference;
+				//increase the count
+				cnt++;
+			}
+		}//end for loop
 
-	//if there are several cars within the vincity
+		//if there are several cars within the vincity
 	if (cnt > 0) {
 		//divide the sum by the count
 		sum = sum / cnt;
@@ -157,8 +162,11 @@ void vehicle::seperation(vector<vehicle> vehicleVector) {
 		//limit the steering
 		steer = vectorMath::limit(steer, maxForce);
 		//add the acceleration in
-		acceleration(steer);
-
+		//acceleration(steer);
+		return steer;
+	}
+	else {
+		return Vector2f(0.0f, 0.0f);
 	}
 }
 
@@ -196,7 +204,7 @@ Vector2f vehicle::alignment(vector<vehicle> vehicleVector) {
 		//get the steer
 		Vector2f steer = sum - vel;
 		//add the acceleration in
-		acceleration(steer);
+		//acceleration(steer);
 		//return the steer
 		return steer;
 	}
@@ -245,22 +253,44 @@ Vector2f vehicle::cohesion(vector<vehicle> vehicleVector) {
 
 //Applies the behaviors to the vehicles
 void vehicle::applyBehaviors(vector<vehicle>vehicleVector) {
+	
+	//apply seperation	
+	Vector2f seperate;
+	if (sepOn == true) {
+		//applies sepertion
+		seperate = seperation(vehicleVector);
+	}
+	else {
+		//set it to normal
+		seperate = Vector2f(0.0f, 0.0f);
+	}
 
-	if (Keyboard::isKeyPressed(Keyboard::S))
-	{
-		//apply seperation
-		seperation(vehicleVector);
+	//apply alignment
+	Vector2f align;
+	if (alignOn = true) {
+		//applies alignment
+		align = alignment(vehicleVector);
 	}
-	if (Keyboard::isKeyPressed(Keyboard::A))
-	{
-		//apply alignment
-		alignment(vehicleVector);
+	else {
+		//set it bac to normal
+		align = Vector2f(0.0f, 0.0f);
 	}
-	if (Keyboard::isKeyPressed(Keyboard::C))
-	{
-		//apply cohesion
-		cohesion(vehicleVector);
+
+	//apply cohesion
+	Vector2f cohe;
+	if (cohOn = true) {
+		//applies cohesion
+		cohe = cohesion(vehicleVector);
 	}
+	else {
+		//set it bac to normal
+		cohe = Vector2f(0.0f, 0.0f);
+	}
+
+	//apply the foces
+	acceleration(seperate);
+	acceleration(align);
+	acceleration(cohe);
 }
 
 
