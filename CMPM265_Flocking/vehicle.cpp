@@ -131,7 +131,7 @@ Vector2f vehicle::seperation(vector<vehicle> vehicleVector) {
 		//loop through all the vehicles in the vector
 		for (int i = 0; i < vehicleVector.size(); i++) {
 			//find the distance between sqrt((x2 - x1) - (y2- y1))
-			float distance = sqrt((pos.x - vehicleVector[i].pos.x) - (pos.y - vehicleVector[i].pos.y));
+			float distance = sqrt((pos.x - vehicleVector[i].pos.x) + (pos.y - vehicleVector[i].pos.y));
 
 			//if the distance is more than 0 but less than the desired seperation (nearby the cars)
 			if ((distance > 0) && (distance < desiredSep)) {
@@ -267,7 +267,8 @@ void vehicle::applyBehaviors(vector<vehicle>vehicleVector) {
 
 	//apply alignment
 	Vector2f align;
-	if (alignOn = true) {
+
+	if (alignOn == true) {
 		//applies alignment
 		align = alignment(vehicleVector);
 	}
@@ -278,7 +279,8 @@ void vehicle::applyBehaviors(vector<vehicle>vehicleVector) {
 
 	//apply cohesion
 	Vector2f cohe;
-	if (cohOn = true) {
+
+	if (cohOn == true) {
 		//applies cohesion
 		cohe = cohesion(vehicleVector);
 	}
